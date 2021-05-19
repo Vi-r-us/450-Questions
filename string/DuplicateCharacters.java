@@ -1,7 +1,5 @@
 package string;
 
-import java.util.*;
-
 public class DuplicateCharacters {
 	
 	// 3 : Find Duplicate characters in a string
