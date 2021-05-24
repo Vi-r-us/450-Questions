@@ -7,18 +7,19 @@ public class LongestPalindromeSubstring {
 		
 		String str = "xxxx";
 		
-		int[][] dp = new int[str.length()][str.length()];	
-		int result = 0;
+		boolean[][] dp = new boolean[str.length()][str.length()];	
+		String result = new String();
 		
 		for (int g=0 ; g<str.length() ; g++) {
 			
 			for (int i=0 , j=g ; j<str.length() ; i++ , j++) {
-				if (g == 0) dp[i][j] = 0;
+				if (g == 0) dp[i][j] = true;
 				
-				else dp[i][j] = (str.charAt(i) == str.charAt(j)) ? dp[i][j-1]+1 : dp[i][j-1];
+				else if (g == 1) dp[i][j] = (str.charAt(i) == str.charAt(j)) ? true : false;
 				
-				result = Math.max(result, dp[i][j]);
+				else dp[i][j] = (str.charAt(i) == str.charAt(j) && dp[i+1][j-1]) ? true : false;
 				
+				if (dp[i][j] && str.substring(i, j+1).length() > result.length()) result = str.substring(i, j+1);
 			}
 		}
 		
