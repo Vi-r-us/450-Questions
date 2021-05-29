@@ -6,9 +6,9 @@ public class WordWrap {
 		// 13 : Word Wrap Problem [VERY IMP].
 
 		
-		int arr[] = {3, 2, 2, 5};
+		int arr[] = {6 ,6 ,7 ,4 ,4};
 	    int n = arr.length;
-	    int k = 6;
+	    int k = 9;
 	    
 		int i, j;
 
@@ -96,7 +96,7 @@ public class WordWrap {
 	            if (cost < dp[i]) 
 	            {
 	                dp[i] = cost;
-	                result = (k - currlen) + dp[j + 1];
+	                ans[i] = j;
 	            }
 	            
 	        }
@@ -106,13 +106,33 @@ public class WordWrap {
 	    // Print starting index 
 	    // and ending index of 
 	    // words present in each line.
-	    i = 0;
-	    while (i < n) 
-	    {
-	        System.out.print( (ans[i]) + " ");
+	    i = 0; 
+	    int temp = arr[0];
+	    
+	    int limit = n-1;
+	    
+	    for (int r = n-2 ; r>0 ;r--) {
+	    	if(ans[r] != ans[limit]) {
+	    		limit = r+1;
+	    		break;
+	    	}
+	    }
+	    
+	    while (i < limit) 
+	    {  
+	    	
+	        if (ans[i+1] != ans[i]) {
+	        	result = result + k-temp;
+	        	temp = arr[i+1];
+	        }
+	        else {
+	        	temp += arr[i+1]+1;
+	        }
+	        System.out.println(result + " " + ans[i] + " " + arr[i]);
 	        i++;
 	    }
-	    System.out.println( "\n" + result);
+	    System.out.println(result);
+	   
 	}
 
 }

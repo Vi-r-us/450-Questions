@@ -1,88 +1,48 @@
 package string;
 
 public class CountStringIn2DArray {
-
-	static int internalSearch(String needle, int row,
-            int col, String hay[],
-            int row_max, int col_max,
-            int xx)
-{
-int found = 0;
-
-if (row >= 0 && row <= row_max && col >= 0 &&
-col <= col_max && xx < needle.length() &&
-needle.charAt(xx) == hay[row].charAt(col))
-{
-char match = needle.charAt(xx);
-xx += 1;
-
-hay[row] = hay[row].substring(0, col) + "0" +
-     hay[row].substring(col + 1);
-
-if (xx == needle.length())
-{
-found = 1;
-}
-else
-{
-
-// Through Backtrack searching
-// in every directions
-found += internalSearch(needle, row,
-                      col + 1, hay,
-                      row_max, col_max,xx);
-found += internalSearch(needle, row, col - 1,
-                      hay, row_max, col_max,xx);
-found += internalSearch(needle, row + 1, col,
-                      hay, row_max, col_max,xx);
-found += internalSearch(needle, row - 1, col,
-                      hay, row_max, col_max,xx);
-}
-
-hay[row] = hay[row].substring(0, col) +
-match + hay[row].substring(col + 1);
-}
-return found;
-}
-
-//Function to search the string in 2d array
-static int searchString(String needle, int row, int col,
-          String str[], int row_count,
-                        int col_count)
-{
-int found = 0;
-int r, c;
-
-for(r = 0; r < row_count; ++r)
-{
-for(c = 0; c < col_count; ++c)
-{
-found += internalSearch(needle, r, c, str,
-                      row_count - 1,
-                      col_count - 1, 0);
-}
-}
-return found;
-}
-
-//Driver code
-public static void main(String args[])
-{
-String needle = "MAGIC";
-String input[] = { "BBABBM", "CBMBBA",
-         "IBABBG", "GOZBBI",
-         "ABBBBC", "MCIGAM" };
-String str[] = new String[input.length];
-int i;
-for(i = 0; i < input.length; ++i)
-{
-str[i] = input[i];
-}
-
-System.out.println("count: " +
-searchString(needle, 0, 0, str,
-             str.length,
-             str[0].length()));
-}
-
+	// 23 : Count of number of given string in 2D character array
+	
+	static int internalSearch(int curRow , int curCol , int rowMax , int colMax, String  str , boolean[][] visited , String[] a) {
+		
+		int found  = 0;
+		if (curRow >= 0 && curRow < rowMax && curCol >= 0 && curCol < colMax 
+				&& !visited[curRow][curCol] &&  str.charAt(0) == a[curRow].charAt(curCol)) {		
+			
+			if (str.length() != 1)
+				visited[curRow][curCol] = true;
+			else 
+				return 1;
+		
+			found += internalSearch(curRow-1, curCol, rowMax, colMax, str.substring(1), visited, a);
+			found += internalSearch(curRow+1, curCol, rowMax, colMax, str.substring(1), visited, a);
+			found += internalSearch(curRow, curCol-1, rowMax, colMax, str.substring(1), visited, a);
+			found += internalSearch(curRow, curCol+1, rowMax, colMax, str.substring(1), visited, a);
+			
+		}
+		
+		return found;
+		
+	}
+	
+	public static void main(String[] args) {
+		String[] a ={ "BBABBM", "CBMBBA",
+                "IBABBG", "GOZBBI",
+                "ABBBBC", "MCIGAM" };
+		
+		String str = "MAGIC";
+		
+		int result = 0;
+		
+		for (int i=0 ; i<a.length ; i++) {
+			for (int j=0; j<a[i].length() ; j++) {	
+				boolean[][] visited = new boolean [a.length] [a[i].length()];
+				result += internalSearch(i, j, a.length, a[0].length(), str, visited, a); 
+			}
+		}
+		
+		System.out.println("Result : " + result);
+		
+	}
+	
 }
