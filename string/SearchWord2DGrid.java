@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SearchWord2DGrid {
 
-	// 23 : Count of number of given string in 2D character array
+	// 24 : Search a Word in a 2D Grid of characters.
 
 		static boolean internalSearch(int curRow , int curCol , int rowMax , int colMax, String  word , char[][] grid , int x , int y) {
 			
